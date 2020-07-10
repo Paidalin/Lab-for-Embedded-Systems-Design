@@ -59,5 +59,6 @@ void StartTask02(void *argument)
   }
 }
 ```
+Before and after changing the code, the flashing of the small light did not change, so the video was not replaced.
 ![GIF](https://github.com/Paidalin/Lab-for-Embedded-Systems-Design/blob/master/Displayed/Show_video_lab3.gif)  
 As you can see, although the second task does not set a delay of one second flashing LD2, but because data will be received every second, his flashing interval is also one second.
