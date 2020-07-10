@@ -44,8 +44,8 @@ prj3.bin \
 all: prj3.elf secondary-outputs
 
 # Tool invocations
-prj3.elf: $(OBJS) $(USER_OBJS) C:\Users\LDD01\Desktop\qianrushi\lab2\prj3\STM32F429ZITX_FLASH.ld
-	arm-none-eabi-gcc -o "prj3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\LDD01\Desktop\qianrushi\lab2\prj3\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prj3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+prj3.elf: $(OBJS) $(USER_OBJS) C:\Users\LDD01\Desktop\qianrushi\Lab-for-Embedded-Systems-Design\prj3\STM32F429ZITX_FLASH.ld
+	arm-none-eabi-gcc -o "prj3.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\LDD01\Desktop\qianrushi\Lab-for-Embedded-Systems-Design\prj3\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prj3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

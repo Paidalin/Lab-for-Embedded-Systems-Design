@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "queue.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -65,6 +66,7 @@ typedef struct {
 osMessageQueueId_t myQueue01Handle;
 MSGQUEUE_OBJ_t msg;
 osStatus_t status;
+QueueHandle_t myQueue;
 const osMessageQueueAttr_t myQueue01_attributes = {
   .name = "myQueue01"
 };
@@ -137,7 +139,7 @@ int main(void)
   /* Create the queue(s) */
   /* creation of myQueue01 */
   myQueue01Handle = osMessageQueueNew (16, sizeof(uint16_t), &myQueue01_attributes);
-
+  myQueue = xQueueCreate(10, sizeof(unsigned long));
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
 
@@ -241,7 +243,8 @@ void StartDefaultTask(void *argument)
   {
 	msg.Buf[0] = 0x7;
 	msg.Idx = 0;
-	osMessageQueuePut(myQueue01Handle, &msg, 0, NULL);
+//	osMessageQueuePut(myQueue01Handle, &msg, 0, NULL);
+	xQueueSend(myQueue, &msg, 0);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
 	osDelay(100);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
@@ -253,9 +256,10 @@ void StartTask02(void *argument)
 {
   for(;;)
   {
-	status = osMessageQueueGet(myQueue01Handle, &msg, NULL, NULL);
-	if(status == osOK) {
-		osMessageQueueReset(myQueue01Handle);
+//	status = osMessageQueueGet(myQueue01Handle, &msg, NULL, NULL);
+	status = xQueueReceive(myQueue, &msg, 10);
+	if(status == pdPASS) {
+//		osMessageQueueReset(myQueue01Handle);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
 		osDelay(100);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);

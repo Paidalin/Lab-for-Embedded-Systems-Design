@@ -23,13 +23,20 @@ void StartTask02(void *argument)
 ## LAB3
 I use the following code in [main.c](https://github.com/Paidalin/Lab-for-Embedded-Systems-Design/blob/master/prj3/Core/Src/main.c) to control the blinking of the two LEDs.
 ```
+#include "queue.h"
+	...
+QueueHandle_t myQueue;
+	...
+myQueue = xQueueCreate(10, sizeof(unsigned long));
+	...
 void StartDefaultTask(void *argument)
 {
   for(;;)
   {
 	msg.Buf[0] = 0x7;
 	msg.Idx = 0;
-	osMessageQueuePut(myQueue01Handle, &msg, 0, NULL);
+//	osMessageQueuePut(myQueue01Handle, &msg, 0, NULL);
+	xQueueSend(myQueue, &msg, 0);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
 	osDelay(100);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
@@ -41,9 +48,10 @@ void StartTask02(void *argument)
 {
   for(;;)
   {
-	status = osMessageQueueGet(myQueue01Handle, &msg, NULL, NULL);
-	if(status == osOK) {
-		osMessageQueueReset(myQueue01Handle);
+//	status = osMessageQueueGet(myQueue01Handle, &msg, NULL, NULL);
+	status = xQueueReceive(myQueue, &msg, 10);
+	if(status == pdPASS) {
+//		osMessageQueueReset(myQueue01Handle);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
 		osDelay(100);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
