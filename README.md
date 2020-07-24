@@ -141,7 +141,7 @@ void StartTask03(void *argument)
   }
 }
 ```
-![GIF](https://github.com/Paidalin/Lab-for-Embedded-Systems-Design/blob/master/Displayed/Show_video_lab3.gif)  
+![GIF](https://github.com/Paidalin/Lab-for-Embedded-Systems-Design/blob/master/Displayed/Show_video_lab4.gif)  
 The LD2 flashes twice in a row at the beginning (I click the RESET botton), and then LD1 and LD2 flash alternately. This phenomenon also proves the correctness of my code, because queue2 has no data after 600ms, so Task2 still uses LED, and then Task2 and Task3 alternately occupy LED (LD3).
 |   | Queue1 | Queue2 |
 | :------| ------: | :------: |
